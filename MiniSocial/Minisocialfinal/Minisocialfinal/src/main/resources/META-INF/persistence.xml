@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="3.0" xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd">
+    <persistence-unit name="MiniSocialPU" transaction-type="JTA">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <jta-data-source>java:jboss/datasources/ExampleDS</jta-data-source>
+        <class>com.minisocial.entity.User</class>
+        <class>com.minisocial.entity.Post</class>
+        <class>com.minisocial.entity.Comment</class>
+        <class>com.minisocial.entity.Like</class>
+        <class>com.minisocial.entity.FriendRequest</class>
+        <class>com.minisocial.entity.Friendship</class>
+        <class>com.minisocial.entity.Group</class>
+        <class>com.minisocial.entity.GroupMembershipRequest</class>
+        <class>com.minisocial.entity.GroupPost</class>
+        <class>com.minisocial.entity.GroupPostComment</class>
+        <class>com.minisocial.entity.GroupPostLike</class>
+        <class>com.minisocial.entity.Notification</class>
+        <properties>
+            <property name="jakarta.persistence.schema-generation.database.action" value="update"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+        </properties>
+    </persistence-unit>
+</persistence>

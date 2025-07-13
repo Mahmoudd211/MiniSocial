@@ -1,0 +1,11 @@
+# Create the JMS queue for notifications
+# Run this script with: $WILDFLY_HOME/bin/jboss-cli.sh --connect --file=setup-jms-queue.cli
+
+# Check if the queue already exists
+if (outcome != success) of /subsystem=messaging-activemq/server=default/jms-queue=NotificationQueue:read-resource
+    # Create the queue if it doesn't exist
+    /subsystem=messaging-activemq/server=default/jms-queue=NotificationQueue:add(entries=["java:/jms/queue/NotificationQueue","java:jboss/exported/jms/queue/NotificationQueue"])
+    echo "JMS queue created: NotificationQueue"
+else
+    echo "JMS queue already exists: NotificationQueue"
+end-if 

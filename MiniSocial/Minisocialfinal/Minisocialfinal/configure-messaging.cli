@@ -1,0 +1,33 @@
+# Remove existing queue if it exists
+if (outcome == success) of /subsystem=messaging-activemq/server=default/jms-queue=NotificationQueue:read-resource
+    /subsystem=messaging-activemq/server=default/jms-queue=NotificationQueue:remove
+    echo "Removed existing NotificationQueue"
+end-if
+
+# Enable the messaging-activemq subsystem
+/subsystem=messaging-activemq:add
+
+# Add the default server
+/subsystem=messaging-activemq/server=default:add
+
+# Add the default JMS queue
+/subsystem=messaging-activemq/server=default/jms-queue=NotificationQueue:add(entries=["java:/jms/queue/NotificationQueue"])
+
+# Configure the EJB subsystem
+/subsystem=ejb3:write-attribute(name=default-resource-adapter-name, value=activemq-ra)
+/subsystem=ejb3:write-attribute(name=default-mdb-instance-pool, value=mdb-strict-max-pool)
+
+# Add the resource adapter
+/subsystem=resource-adapters:add
+/subsystem=resource-adapters/resource-adapter=activemq-ra:add(module=org.apache.activemq.artemis, transaction-support=XATransaction)
+/subsystem=resource-adapters/resource-adapter=activemq-ra/connection-definitions=activemq-ra:add(class-name=org.apache.activemq.artemis.ra.ActiveMQResourceAdapter, jndi-name=java:/activemq-ra)
+
+# Add the messaging-activemq connector
+/subsystem=messaging-activemq/server=default/connector=http-connector:add(socket-binding=http-messaging, endpoint=http-acceptor)
+/subsystem=messaging-activemq/server=default/http-acceptor=http-acceptor:add(http-listener=default)
+
+# Add the socket binding
+/socket-binding-group=standard-sockets/socket-binding=http-messaging:add(port=8080)
+
+# Reload the server
+:reload 

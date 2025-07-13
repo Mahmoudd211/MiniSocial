@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jboss-deployment-structure
+    xmlns="urn:jboss:deployment-structure:1.2"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+      urn:jboss:deployment-structure:1.2 
+      https://docs.wildfly.org/28/schema/jboss-deployment-structure_1_2.xsd">
+    <deployment>
+        <dependencies>
+            <!-- Use the server's built-in Artemis JMS module -->
+            <module name="org.apache.activemq.artemis"/>
+            
+            <!-- Jakarta EE APIs -->
+            <module name="jakarta.jms.api" export="true"/>
+            <module name="jakarta.persistence.api" export="true"/>
+            <module name="jakarta.transaction.api" export="true"/>
+            
+            <!-- JBoss Modules -->
+            <module name="org.jboss.as.ejb3" export="true"/>
+            <module name="org.jboss.as.jaxrs" export="true"/>
+            <module name="org.jboss.as.jpa" export="true"/>
+            <module name="org.jboss.as.naming" export="true"/>
+            <module name="org.jboss.as.transactions" export="true"/>
+            <module name="org.jboss.as.webservices" export="true"/>
+            <module name="org.jboss.as.weld" export="true"/>
+            <module name="org.wildfly.extension.messaging-activemq" export="true"/>
+            
+            <!-- Hibernate -->
+            <module name="org.hibernate" export="true"/>
+            <module name="org.hibernate.envers" export="true"/>
+            
+            <!-- H2 Database -->
+            <module name="com.h2database.h2" export="true"/>
+        </dependencies>
+        <resources>
+            <resource-root path="WEB-INF/classes"/>
+        </resources>
+    </deployment>
+</jboss-deployment-structure> 

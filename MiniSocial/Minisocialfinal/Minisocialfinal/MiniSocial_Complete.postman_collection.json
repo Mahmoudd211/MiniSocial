@@ -1,0 +1,282 @@
+{
+    "info": {
+        "name": "MiniSocial API Test Collection",
+        "description": "Complete test collection for all MiniSocial API endpoints"
+    },
+    "auth": {
+        "register": {
+            "method": "POST",
+            "url": "http://localhost:8080/minisocial/api/users/register",
+            "headers": {
+                "Content-Type": "application/json"
+            },
+            "body": {
+                "name": "Test User",
+                "email": "test@example.com",
+                "password": "password123",
+                "role": "USER"
+            },
+            "expected_response": {
+                "status": 201,
+                "headers": {
+                    "Authorization": "Bearer *"
+                },
+                "body": {
+                    "id": "*",
+                    "name": "Test User",
+                    "email": "test@example.com",
+                    "role": "USER"
+                }
+            }
+        },
+        "login": {
+            "method": "POST",
+            "url": "http://localhost:8080/minisocial/api/users/login",
+            "headers": {
+                "Content-Type": "application/json"
+            },
+            "body": {
+                "email": "test@example.com",
+                "password": "password123"
+            },
+            "expected_response": {
+                "status": 200,
+                "headers": {
+                    "Authorization": "Bearer *"
+                },
+                "body": {
+                    "id": "*",
+                    "name": "Test User",
+                    "email": "test@example.com",
+                    "role": "USER"
+                }
+            }
+        }
+    },
+    "posts": {
+        "create_post": {
+            "method": "POST",
+            "url": "http://localhost:8080/minisocial/api/posts",
+            "headers": {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer ${token}"
+            },
+            "body": {
+                "content": "This is a test post",
+                "userId": "${userId}"
+            },
+            "expected_response": {
+                "status": 201,
+                "body": {
+                    "id": "*",
+                    "content": "This is a test post",
+                    "authorId": "${userId}",
+                    "createdAt": "*"
+                }
+            }
+        },
+        "get_posts": {
+            "method": "GET",
+            "url": "http://localhost:8080/minisocial/api/posts",
+            "headers": {
+                "Authorization": "Bearer ${token}"
+            },
+            "expected_response": {
+                "status": 200,
+                "body": [
+                    {
+                        "id": "*",
+                        "content": "*",
+                        "authorId": "*",
+                        "createdAt": "*"
+                    }
+                ]
+            }
+        }
+    },
+    "comments": {
+        "create_comment": {
+            "method": "POST",
+            "url": "http://localhost:8080/minisocial/api/comments/${postId}",
+            "headers": {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer ${token}"
+            },
+            "body": {
+                "content": "This is a test comment",
+                "userId": "${userId}"
+            },
+            "expected_response": {
+                "status": 201,
+                "body": {
+                    "id": "*",
+                    "content": "This is a test comment",
+                    "postId": "${postId}",
+                    "authorId": "${userId}",
+                    "createdAt": "*"
+                }
+            }
+        }
+    },
+    "likes": {
+        "like_post": {
+            "method": "POST",
+            "url": "http://localhost:8080/minisocial/api/likes/post/${postId}",
+            "headers": {
+                "Authorization": "Bearer ${token}"
+            },
+            "query_params": {
+                "userId": "${userId}"
+            },
+            "expected_response": {
+                "status": 201,
+                "body": {
+                    "id": "*",
+                    "postId": "${postId}",
+                    "userId": "${userId}"
+                }
+            }
+        }
+    },
+    "groups": {
+        "create_group": {
+            "method": "POST",
+            "url": "http://localhost:8080/minisocial/api/groups",
+            "headers": {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer ${token}"
+            },
+            "query_params": {
+                "name": "Test Group",
+                "description": "This is a test group",
+                "isOpen": true,
+                "creatorId": "${userId}"
+            },
+            "expected_response": {
+                "status": 201,
+                "body": {
+                    "id": "*",
+                    "name": "Test Group",
+                    "description": "This is a test group",
+                    "isOpen": true,
+                    "creatorId": "${userId}"
+                }
+            }
+        },
+        "join_group": {
+            "method": "POST",
+            "url": "http://localhost:8080/minisocial/api/groups/${groupId}/join",
+            "headers": {
+                "Authorization": "Bearer ${token}"
+            },
+            "query_params": {
+                "userId": "${userId}"
+            },
+            "expected_response": {
+                "status": 200,
+                "body": {
+                    "message": "Successfully joined the group"
+                }
+            }
+        }
+    },
+    "friends": {
+        "send_friend_request": {
+            "method": "POST",
+            "url": "http://localhost:8080/minisocial/api/friends/request/${receiverId}",
+            "headers": {
+                "Authorization": "Bearer ${token}"
+            },
+            "query_params": {
+                "senderId": "${userId}"
+            },
+            "expected_response": {
+                "status": 201,
+                "body": {
+                    "id": "*",
+                    "senderId": "${userId}",
+                    "receiverId": "${receiverId}",
+                    "status": "PENDING"
+                }
+            }
+        },
+        "accept_friend_request": {
+            "method": "PUT",
+            "url": "http://localhost:8080/minisocial/api/friends/request/${requestId}/respond",
+            "headers": {
+                "Authorization": "Bearer ${token}"
+            },
+            "query_params": {
+                "userId": "${userId}",
+                "accept": true
+            },
+            "expected_response": {
+                "status": 200,
+                "body": {
+                    "id": "*",
+                    "senderId": "*",
+                    "receiverId": "${userId}",
+                    "status": "ACCEPTED"
+                }
+            }
+        }
+    },
+    "notifications": {
+        "get_notifications": {
+            "method": "GET",
+            "url": "http://localhost:8080/minisocial/api/notifications",
+            "headers": {
+                "Authorization": "Bearer ${token}"
+            },
+            "expected_response": {
+                "status": 200,
+                "body": [
+                    {
+                        "id": "*",
+                        "eventType": "*",
+                        "recipientId": "${userId}",
+                        "senderId": "*",
+                        "message": "*",
+                        "entityType": "*",
+                        "entityId": "*",
+                        "createdAt": "*",
+                        "read": false
+                    }
+                ]
+            }
+        },
+        "get_unread_notifications": {
+            "method": "GET",
+            "url": "http://localhost:8080/minisocial/api/notifications/unread",
+            "headers": {
+                "Authorization": "Bearer ${token}"
+            },
+            "expected_response": {
+                "status": 200,
+                "body": [
+                    {
+                        "id": "*",
+                        "eventType": "*",
+                        "recipientId": "${userId}",
+                        "senderId": "*",
+                        "message": "*",
+                        "entityType": "*",
+                        "entityId": "*",
+                        "createdAt": "*",
+                        "read": false
+                    }
+                ]
+            }
+        },
+        "mark_notification_read": {
+            "method": "PUT",
+            "url": "http://localhost:8080/minisocial/api/notifications/${notificationId}/read",
+            "headers": {
+                "Authorization": "Bearer ${token}"
+            },
+            "expected_response": {
+                "status": 204
+            }
+        }
+    }
+}

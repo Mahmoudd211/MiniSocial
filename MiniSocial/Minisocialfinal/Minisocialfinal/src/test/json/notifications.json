@@ -1,0 +1,87 @@
+{
+    "get_notifications": {
+        "method": "GET",
+        "url": "http://localhost:8080/minisocial/api/notifications",
+        "headers": {
+            "Authorization": "Bearer ${token}"
+        },
+        "expected_response": {
+            "status": 200,
+            "body": [
+                {
+                    "id": 1,
+                    "type": "POST_LIKED",
+                    "message": "User liked your post",
+                    "userId": 1,
+                    "createdAt": "2024-03-20T10:00:00",
+                    "read": false
+                },
+                {
+                    "id": 2,
+                    "type": "POST_COMMENTED",
+                    "message": "User commented on your post",
+                    "userId": 1,
+                    "createdAt": "2024-03-20T10:00:00",
+                    "read": false
+                },
+                {
+                    "id": 3,
+                    "type": "GROUP_JOINED",
+                    "message": "User joined your group",
+                    "userId": 1,
+                    "createdAt": "2024-03-20T10:00:00",
+                    "read": false
+                }
+            ]
+        }
+    },
+    "get_unread_notifications": {
+        "method": "GET",
+        "url": "http://localhost:8080/minisocial/api/notifications/unread",
+        "headers": {
+            "Authorization": "Bearer ${token}"
+        },
+        "expected_response": {
+            "status": 200,
+            "body": [
+                {
+                    "id": 1,
+                    "type": "POST_LIKED",
+                    "message": "User liked your post",
+                    "userId": 1,
+                    "createdAt": "2024-03-20T10:00:00",
+                    "read": false
+                },
+                {
+                    "id": 2,
+                    "type": "POST_COMMENTED",
+                    "message": "User commented on your post",
+                    "userId": 1,
+                    "createdAt": "2024-03-20T10:00:00",
+                    "read": false
+                },
+                {
+                    "id": 3,
+                    "type": "GROUP_JOINED",
+                    "message": "User joined your group",
+                    "userId": 1,
+                    "createdAt": "2024-03-20T10:00:00",
+                    "read": false
+                }
+            ]
+        }
+    },
+    "mark_notification_read": {
+        "method": "PUT",
+        "url": "http://localhost:8080/minisocial/api/notifications/1/read",
+        "headers": {
+            "Authorization": "Bearer ${token}"
+        },
+        "expected_response": {
+            "status": 200,
+            "body": {
+                "message": "Notification marked as read"
+            }
+        }
+    }
+} 

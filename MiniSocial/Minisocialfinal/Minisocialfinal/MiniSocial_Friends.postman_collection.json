@@ -1,0 +1,98 @@
+{
+	"info": {
+		"_postman_id": "b1c2d3e4-f5g6-7890-hijk-lm1234567890",
+		"name": "MiniSocial Friends API",
+		"description": "Collection for testing MiniSocial Friends API endpoints",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Send Friend Request",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/Minisocialfinal/api/friends/request/2?senderId=1",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["Minisocialfinal", "api", "friends", "request", "2"],
+					"query": [
+						{
+							"key": "senderId",
+							"value": "1"
+						}
+					]
+				},
+				"description": "Send a friend request from one user to another"
+			}
+		},
+		{
+			"name": "Get Pending Friend Requests",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/Minisocialfinal/api/friends/pending?userId=2",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["Minisocialfinal", "api", "friends", "pending"],
+					"query": [
+						{
+							"key": "userId",
+							"value": "2"
+						}
+					]
+				},
+				"description": "Get all pending friend requests for a user"
+			}
+		},
+		{
+			"name": "Respond to Friend Request",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/Minisocialfinal/api/friends/request/1/respond?userId=2&accept=true",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["Minisocialfinal", "api", "friends", "request", "1", "respond"],
+					"query": [
+						{
+							"key": "userId",
+							"value": "2"
+						},
+						{
+							"key": "accept",
+							"value": "true"
+						}
+					]
+				},
+				"description": "Accept or reject a friend request"
+			}
+		},
+		{
+			"name": "Get Friends List",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/Minisocialfinal/api/friends/list?userId=1",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["Minisocialfinal", "api", "friends", "list"],
+					"query": [
+						{
+							"key": "userId",
+							"value": "1"
+						}
+					]
+				},
+				"description": "Get all friends of a user"
+			}
+		}
+	]
+} 

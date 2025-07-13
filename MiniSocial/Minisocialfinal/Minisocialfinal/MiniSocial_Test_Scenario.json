@@ -1,0 +1,811 @@
+{
+	"info": {
+		"_postman_id": "test-scenario-id",
+		"name": "MiniSocial Test Scenario",
+		"description": "Test collection for user registration, friend connections, and posts between Sasa, Ahmed, and Mostafa Raafat",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. Register Sasa (using username)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"sasa\",\n    \"email\": \"sasa@example.com\",\n    \"password\": \"sasa123\",\n    \"bio\": \"Web Developer\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/Minisocialfinal/api/users/register",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["Minisocialfinal", "api", "users", "register"]
+				}
+			}
+		},
+		{
+			"name": "2. Register Ahmed (using firstName and lastName)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstName\": \"Ahmed\",\n    \"lastName\": \"Mohamed\",\n    \"email\": \"ahmed@example.com\",\n    \"password\": \"ahmed123\",\n    \"bio\": \"Data Scientist\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/Minisocialfinal/api/users/register",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["Minisocialfinal", "api", "users", "register"]
+				}
+			}
+		},
+		{
+			"name": "3. Register Mostafa Raafat (using all fields)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"mostafa.raafat\",\n    \"firstName\": \"Mostafa\",\n    \"lastName\": \"Raafat\",\n    \"email\": \"mostafa.raafat@example.com\",\n    \"password\": \"mostafa123\",\n    \"bio\": \"Software Engineer\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/Minisocialfinal/api/users/register",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["Minisocialfinal", "api", "users", "register"]
+				}
+			}
+		},
+		{
+			"name": "4. Login as Sasa",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/Minisocialfinal/api/users/login?email=sasa@example.com&password=sasa123",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["Minisocialfinal", "api", "users", "login"],
+					"query": [
+						{
+							"key": "email",
+							"value": "sasa@example.com"
+						},
+						{
+							"key": "password",
+							"value": "sasa123"
+						}
+					]
+				}
+			}
+		},
+		{
+			"name": "5. Sasa Creates Post",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{sasa_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"content\": \"Hello everyone! This is my first post.\",\n    \"imageUrls\": [\"https://example.com/sasa-post.jpg\"],\n    \"linkUrls\": [\"https://example.com/sasa-link\"]\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/Minisocialfinal/api/posts?userId=1",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["Minisocialfinal", "api", "posts"],
+					"query": [
+						{
+							"key": "userId",
+							"value": "1"
+						}
+					]
+				}
+			}
+		},
+		{
+			"name": "6. Sasa Sends Friend Request to Ahmed",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{sasa_token}}"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/Minisocialfinal/api/friends/request/2?senderId=1",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["Minisocialfinal", "api", "friends", "request", "2"],
+					"query": [
+						{
+							"key": "senderId",
+							"value": "1"
+						}
+					]
+				}
+			}
+		},
+		{
+			"name": "7. Login as Ahmed",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/Minisocialfinal/api/users/login?email=ahmed@example.com&password=ahmed123",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["Minisocialfinal", "api", "users", "login"],
+					"query": [
+						{
+							"key": "email",
+							"value": "ahmed@example.com"
+						},
+						{
+							"key": "password",
+							"value": "ahmed123"
+						}
+					]
+				}
+			}
+		},
+		{
+			"name": "8. Check Pending Friend Requests",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{ahmed_token}}"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/Minisocialfinal/api/friends/pending?userId=2",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["Minisocialfinal", "api", "friends", "pending"],
+					"query": [
+						{
+							"key": "userId",
+							"value": "2"
+						}
+					]
+				}
+			}
+		},
+		{
+			"name": "9. Ahmed Accepts Friend Request",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{ahmed_token}}"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/Minisocialfinal/api/friends/request/{{friend_request_id}}/respond?userId=2&accept=true",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["Minisocialfinal", "api", "friends", "request", "{{friend_request_id}}", "respond"],
+					"query": [
+						{
+							"key": "userId",
+							"value": "2"
+						},
+						{
+							"key": "accept",
+							"value": "true"
+						}
+					]
+				}
+			}
+		},
+		{
+			"name": "10. Ahmed Creates Post",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{ahmed_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"content\": \"Just accepted a friend request from Sasa!\",\n    \"imageUrls\": [\"https://example.com/ahmed-post.jpg\"],\n    \"linkUrls\": [\"https://example.com/ahmed-link\"]\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/Minisocialfinal/api/posts?userId=2",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["Minisocialfinal", "api", "posts"],
+					"query": [
+						{
+							"key": "userId",
+							"value": "2"
+						}
+					]
+				}
+			}
+		},
+		{
+			"name": "11. Login as Mostafa Raafat",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/Minisocialfinal/api/users/login?email=mostafa.raafat@example.com&password=mostafa123",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["Minisocialfinal", "api", "users", "login"],
+					"query": [
+						{
+							"key": "email",
+							"value": "mostafa.raafat@example.com"
+						},
+						{
+							"key": "password",
+							"value": "mostafa123"
+						}
+					]
+				}
+			}
+		},
+		{
+			"name": "12. Mostafa Sends Friend Requests",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{mostafa_token}}"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/Minisocialfinal/api/friends/request/1?senderId=3",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["Minisocialfinal", "api", "friends", "request", "1"],
+					"query": [
+						{
+							"key": "senderId",
+							"value": "3"
+						}
+					]
+				}
+			}
+		},
+		{
+			"name": "13. Mostafa Creates Post",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{mostafa_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"content\": \"Hello everyone! I'm Mostafa Raafat, a software engineer.\",\n    \"imageUrls\": [\"https://example.com/mostafa-post.jpg\"],\n    \"linkUrls\": [\"https://example.com/mostafa-link\"]\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/Minisocialfinal/api/posts?userId=3",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["Minisocialfinal", "api", "posts"],
+					"query": [
+						{
+							"key": "userId",
+							"value": "3"
+						}
+					]
+				}
+			}
+		},
+		{
+			"name": "14. Sasa Accepts Mostafa's Request",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{sasa_token}}"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/Minisocialfinal/api/friends/request/2/respond?userId=1&accept=true",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["Minisocialfinal", "api", "friends", "request", "2", "respond"],
+					"query": [
+						{
+							"key": "userId",
+							"value": "1"
+						},
+						{
+							"key": "accept",
+							"value": "true"
+						}
+					]
+				}
+			}
+		},
+		{
+			"name": "15. View All Posts (Sasa)",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{sasa_token}}"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/Minisocialfinal/api/posts/friends/1",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["Minisocialfinal", "api", "posts", "friends", "1"]
+				}
+			}
+		},
+		{
+			"name": "16. Create Group (Sasa)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{sasa_token}}"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/Minisocialfinal/api/groups?name=Web%20Developers%20Group&description=A%20group%20for%20web%20developers%20to%20share%20knowledge%20and%20experiences&isOpen=true&creatorId=1",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["Minisocialfinal", "api", "groups"],
+					"query": [
+						{
+							"key": "name",
+							"value": "Web Developers Group"
+						},
+						{
+							"key": "description",
+							"value": "A group for web developers to share knowledge and experiences"
+						},
+						{
+							"key": "isOpen",
+							"value": "true"
+						},
+						{
+							"key": "creatorId",
+							"value": "1"
+						}
+					]
+				}
+			}
+		},
+		{
+			"name": "17. Ahmed Requests to Join Group",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{ahmed_token}}"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/Minisocialfinal/api/groups/1/join?userId=2",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["Minisocialfinal", "api", "groups", "1", "join"],
+					"query": [
+						{
+							"key": "userId",
+							"value": "2"
+						}
+					]
+				}
+			}
+		},
+		{
+			"name": "18. Sasa Approves Ahmed's Join Request",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{sasa_token}}"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/Minisocialfinal/api/groups/requests/1/approve?adminId=1",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["Minisocialfinal", "api", "groups", "requests", "1", "approve"],
+					"query": [
+						{
+							"key": "adminId",
+							"value": "1"
+						}
+					]
+				}
+			}
+		},
+		{
+			"name": "19. Ahmed Creates Group Post",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{ahmed_token}}"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/Minisocialfinal/api/group-posts?groupId=1&userId=2&content=Hello%20fellow%20web%20developers!%20I'm%20excited%20to%20join%20this%20group.",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["Minisocialfinal", "api", "group-posts"],
+					"query": [
+						{
+							"key": "groupId",
+							"value": "1"
+						},
+						{
+							"key": "userId",
+							"value": "2"
+						},
+						{
+							"key": "content",
+							"value": "Hello fellow web developers! I'm excited to join this group."
+						}
+					]
+				}
+			}
+		},
+		{
+			"name": "20. View Group Posts",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{sasa_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/Minisocialfinal/api/group-posts/group/{{group_id}}",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["Minisocialfinal", "api", "group-posts", "group", "{{group_id}}"]
+				}
+			}
+		},
+		{
+			"name": "21. Check Notifications (Sasa)",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{sasa_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/Minisocialfinal/api/notifications/user/1",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["Minisocialfinal", "api", "notifications", "user", "1"]
+				}
+			}
+		},
+		{
+			"name": "22. Check Unread Notifications (Sasa)",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{sasa_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/Minisocialfinal/api/notifications/user/1/unread",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["Minisocialfinal", "api", "notifications", "user", "1", "unread"]
+				}
+			}
+		},
+		{
+			"name": "23. Mark Notification as Read",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{sasa_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/Minisocialfinal/api/notifications/{{notification_id}}/read",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["Minisocialfinal", "api", "notifications", "{{notification_id}}", "read"]
+				}
+			}
+		},
+		{
+			"name": "24. Mark All Notifications as Read (Sasa)",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{sasa_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/Minisocialfinal/api/notifications/user/1/read-all",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["Minisocialfinal", "api", "notifications", "user", "1", "read-all"]
+				}
+			}
+		},
+		{
+			"name": "25. Test Post Like Notification",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{ahmed_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/Minisocialfinal/api/likes/post/1?userId=2",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["Minisocialfinal", "api", "likes", "post", "1"],
+					"query": [
+						{
+							"key": "userId",
+							"value": "2"
+						}
+					]
+				}
+			}
+		},
+		{
+			"name": "26. Test Post Comment Notification",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{ahmed_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"content\": \"Great post!\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/Minisocialfinal/api/comments/1?userId=2",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["Minisocialfinal", "api", "comments", "1"],
+					"query": [
+						{
+							"key": "userId",
+							"value": "2"
+						}
+					]
+				}
+			}
+		},
+		{
+			"name": "27. Check Sasa's Notifications After Like and Comment",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{sasa_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/Minisocialfinal/api/notifications/user/1",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["Minisocialfinal", "api", "notifications", "user", "1"]
+				}
+			}
+		},
+		{
+			"name": "28. Check Sasa's Unread Notifications",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{sasa_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/Minisocialfinal/api/notifications/user/1/unread",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["Minisocialfinal", "api", "notifications", "user", "1", "unread"]
+				}
+			}
+		},
+		{
+			"name": "29. Mark Specific Notification as Read",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{sasa_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/Minisocialfinal/api/notifications/{{notification_id}}/read",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["Minisocialfinal", "api", "notifications", "{{notification_id}}", "read"]
+				}
+			}
+		},
+		{
+			"name": "30. Mark All Notifications as Read",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{sasa_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/Minisocialfinal/api/notifications/user/1/read-all",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["Minisocialfinal", "api", "notifications", "user", "1", "read-all"]
+				}
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "sasa_token",
+			"value": "your-jwt-token-here"
+		},
+		{
+			"key": "ahmed_token",
+			"value": "your-jwt-token-here"
+		},
+		{
+			"key": "mostafa_token",
+			"value": "your-jwt-token-here"
+		},
+		{
+			"key": "group_id",
+			"value": "1"
+		}
+	]
+} 

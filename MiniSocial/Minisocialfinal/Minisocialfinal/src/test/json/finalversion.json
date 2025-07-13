@@ -1,0 +1,750 @@
+{
+    "info": {
+        "name": "MiniSocial API Complete Test Collection",
+        "description": "Comprehensive test collection for all MiniSocial API endpoints including edge cases and error scenarios"
+    },
+    "auth": {
+        "item": [
+            {
+                "name": "Register User",
+                "request": {
+                    "method": "POST",
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        }
+                    ],
+                    "url": {
+                        "raw": "http://localhost:8080/minisocial/api/users/register",
+                        "protocol": "http",
+                        "host": ["localhost"],
+                        "port": "8080",
+                        "path": ["minisocial", "api", "users", "register"]
+                    },
+                    "body": {
+                        "mode": "raw",
+                        "raw": "{\n    \"name\": \"Test User\",\n    \"email\": \"test@example.com\",\n    \"password\": \"password123\",\n    \"role\": \"USER\"\n}"
+                    }
+                }
+            },
+            {
+                "name": "Login User",
+                "request": {
+                    "method": "POST",
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        }
+                    ],
+                    "url": {
+                        "raw": "http://localhost:8080/minisocial/api/users/login",
+                        "protocol": "http",
+                        "host": ["localhost"],
+                        "port": "8080",
+                        "path": ["minisocial", "api", "users", "login"]
+                    },
+                    "body": {
+                        "mode": "raw",
+                        "raw": "{\n    \"email\": \"test@example.com\",\n    \"password\": \"password123\"\n}"
+                    }
+                }
+            }
+        ],
+        "register": {
+            "method": "POST",
+            "url": "http://localhost:8080/minisocial/api/users/register",
+            "headers": {
+                "Content-Type": "application/json"
+            },
+            "body": {
+                "name": "Test User",
+                "email": "test@example.com",
+                "password": "password123",
+                "role": "USER"
+            },
+            "expected_response": {
+                "status": 201,
+                "headers": {
+                    "Authorization": "Bearer *"
+                },
+                "body": {
+                    "id": "*",
+                    "name": "Test User",
+                    "email": "test@example.com",
+                    "role": "USER"
+                }
+            }
+        },
+        "register_validation": {
+            "method": "POST",
+            "url": "http://localhost:8080/minisocial/api/users/register",
+            "headers": {
+                "Content-Type": "application/json"
+            },
+            "body": {
+                "name": "",
+                "email": "invalid-email",
+                "password": "123",
+                "role": "INVALID_ROLE"
+            },
+            "expected_response": {
+                "status": 400,
+                "body": {
+                    "error": "Validation failed",
+                    "details": [
+                        "Name cannot be empty",
+                        "Invalid email format",
+                        "Password must be at least 8 characters",
+                        "Invalid role"
+                    ]
+                }
+            }
+        },
+        "register_duplicate_email": {
+            "method": "POST",
+            "url": "http://localhost:8080/minisocial/api/users/register",
+            "headers": {
+                "Content-Type": "application/json"
+            },
+            "body": {
+                "name": "Another User",
+                "email": "test@example.com",
+                "password": "password123",
+                "role": "USER"
+            },
+            "expected_response": {
+                "status": 409,
+                "body": {
+                    "error": "Email already exists"
+                }
+            }
+        }
+    },
+    "posts": {
+        "item": [
+            {
+                "name": "Create Post",
+                "request": {
+                    "method": "POST",
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "key": "Authorization",
+                            "value": "Bearer {{token}}"
+                        }
+                    ],
+                    "url": {
+                        "raw": "http://localhost:8080/minisocial/api/posts",
+                        "protocol": "http",
+                        "host": ["localhost"],
+                        "port": "8080",
+                        "path": ["minisocial", "api", "posts"]
+                    },
+                    "body": {
+                        "mode": "raw",
+                        "raw": "{\n    \"content\": \"This is a test post\",\n    \"userId\": \"{{userId}}\"\n}"
+                    }
+                }
+            },
+            {
+                "name": "Get Posts",
+                "request": {
+                    "method": "GET",
+                    "header": [
+                        {
+                            "key": "Authorization",
+                            "value": "Bearer {{token}}"
+                        }
+                    ],
+                    "url": {
+                        "raw": "http://localhost:8080/minisocial/api/posts",
+                        "protocol": "http",
+                        "host": ["localhost"],
+                        "port": "8080",
+                        "path": ["minisocial", "api", "posts"]
+                    }
+                }
+            }
+        ]
+    },
+    "comments": {
+        "item": [
+            {
+                "name": "Create Comment",
+                "request": {
+                    "method": "POST",
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "key": "Authorization",
+                            "value": "Bearer {{token}}"
+                        }
+                    ],
+                    "url": {
+                        "raw": "http://localhost:8080/minisocial/api/comments/{{postId}}",
+                        "protocol": "http",
+                        "host": ["localhost"],
+                        "port": "8080",
+                        "path": ["minisocial", "api", "comments", "{{postId}}"]
+                    },
+                    "body": {
+                        "mode": "raw",
+                        "raw": "{\n    \"content\": \"This is a test comment\",\n    \"userId\": \"{{userId}}\"\n}"
+                    }
+                }
+            }
+        ]
+    },
+    "likes": {
+        
+    },
+    "groups": {
+        "item": [
+            {
+                "name": "Create Group",
+                "request": {
+                    "method": "POST",
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "key": "Authorization",
+                            "value": "Bearer {{token}}"
+                        }
+                    ],
+                    "url": {
+                        "raw": "http://localhost:8080/minisocial/api/groups?name=Test Group&description=This is a test group&isOpen=true&creatorId={{userId}}",
+                        "protocol": "http",
+                        "host": ["localhost"],
+                        "port": "8080",
+                        "path": ["minisocial", "api", "groups"],
+                        "query": [
+                            {
+                                "key": "name",
+                                "value": "Test Group"
+                            },
+                            {
+                                "key": "description",
+                                "value": "This is a test group"
+                            },
+                            {
+                                "key": "isOpen",
+                                "value": "true"
+                            },
+                            {
+                                "key": "creatorId",
+                                "value": "{{userId}}"
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    },
+    "friends": {
+        "item": [
+            {
+                "name": "Send Friend Request",
+                "request": {
+                    "method": "POST",
+                    "header": [
+                        {
+                            "key": "Authorization",
+                            "value": "Bearer {{token}}"
+                        }
+                    ],
+                    "url": {
+                        "raw": "http://localhost:8080/minisocial/api/friends/request/{{receiverId}}?senderId={{userId}}",
+                        "protocol": "http",
+                        "host": ["localhost"],
+                        "port": "8080",
+                        "path": ["minisocial", "api", "friends", "request", "{{receiverId}}"],
+                        "query": [
+                            {
+                                "key": "senderId",
+                                "value": "{{userId}}"
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    },
+    "notifications": {
+        "item": [
+            {
+                "name": "Get Notifications",
+                "request": {
+                    "method": "GET",
+                    "header": [
+                        {
+                            "key": "Authorization",
+                            "value": "Bearer {{token}}"
+                        }
+                    ],
+                    "url": {
+                        "raw": "http://localhost:8080/minisocial/api/notifications",
+                        "protocol": "http",
+                        "host": ["localhost"],
+                        "port": "8080",
+                        "path": ["minisocial", "api", "notifications"]
+                    }
+                }
+            }
+        ],
+        "get_notifications": {
+            "method": "GET",
+            "url": "http://localhost:8080/minisocial/api/notifications",
+            "headers": {
+                "Authorization": "Bearer ${token}"
+            },
+            "expected_response": {
+                "status": 200,
+                "body": [
+                    {
+                        "id": "*",
+                        "eventType": "*",
+                        "recipientId": "${userId}",
+                        "senderId": "*",
+                        "message": "*",
+                        "entityType": "*",
+                        "entityId": "*",
+                        "createdAt": "*",
+                        "read": false
+                    }
+                ]
+            }
+        },
+        "get_unread_notifications": {
+            "method": "GET",
+            "url": "http://localhost:8080/minisocial/api/notifications/unread",
+            "headers": {
+                "Authorization": "Bearer ${token}"
+            },
+            "expected_response": {
+                "status": 200,
+                "body": [
+                    {
+                        "id": "*",
+                        "eventType": "*",
+                        "recipientId": "${userId}",
+                        "senderId": "*",
+                        "message": "*",
+                        "entityType": "*",
+                        "entityId": "*",
+                        "createdAt": "*",
+                        "read": false
+                    }
+                ]
+            }
+        },
+        "mark_notification_read": {
+            "method": "PUT",
+            "url": "http://localhost:8080/minisocial/api/notifications/${notificationId}/read",
+            "headers": {
+                "Authorization": "Bearer ${token}"
+            },
+            "expected_response": {
+                "status": 204
+            }
+        },
+        "mark_all_notifications_read": {
+            "method": "PUT",
+            "url": "http://localhost:8080/minisocial/api/notifications/read-all",
+            "headers": {
+                "Authorization": "Bearer ${token}"
+            },
+            "expected_response": {
+                "status": 204
+            }
+        }
+    },
+    "postman_collection": {
+        "info": {
+            "name": "MiniSocial API Complete Test Collection",
+            "description": "Comprehensive test collection for all MiniSocial API endpoints including edge cases and error scenarios",
+            "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+        },
+        "item": [
+            {
+                "name": "Authentication",
+                "item": [
+                    {
+                        "name": "Register User",
+                        "request": {
+                            "method": "POST",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "url": {
+                                "raw": "http://localhost:8080/minisocial/api/users/register",
+                                "protocol": "http",
+                                "host": ["localhost"],
+                                "port": "8080",
+                                "path": ["minisocial", "api", "users", "register"]
+                            },
+                            "body": {
+                                "mode": "raw",
+                                "raw": "{\n    \"name\": \"Test User\",\n    \"email\": \"test@example.com\",\n    \"password\": \"password123\",\n    \"role\": \"USER\"\n}"
+                            }
+                        }
+                    },
+                    {
+                        "name": "Register User - Validation Error",
+                        "request": {
+                            "method": "POST",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "url": {
+                                "raw": "http://localhost:8080/minisocial/api/users/register",
+                                "protocol": "http",
+                                "host": ["localhost"],
+                                "port": "8080",
+                                "path": ["minisocial", "api", "users", "register"]
+                            },
+                            "body": {
+                                "mode": "raw",
+                                "raw": "{\n    \"name\": \"\",\n    \"email\": \"invalid-email\",\n    \"password\": \"123\",\n    \"role\": \"INVALID_ROLE\"\n}"
+                            }
+                        }
+                    },
+                    {
+                        "name": "Register User - Duplicate Email",
+                        "request": {
+                            "method": "POST",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "url": {
+                                "raw": "http://localhost:8080/minisocial/api/users/register",
+                                "protocol": "http",
+                                "host": ["localhost"],
+                                "port": "8080",
+                                "path": ["minisocial", "api", "users", "register"]
+                            },
+                            "body": {
+                                "mode": "raw",
+                                "raw": "{\n    \"name\": \"Another User\",\n    \"email\": \"test@example.com\",\n    \"password\": \"password123\",\n    \"role\": \"USER\"\n}"
+                            }
+                        }
+                    },
+                    {
+                        "name": "Login User",
+                        "request": {
+                            "method": "POST",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "url": {
+                                "raw": "http://localhost:8080/minisocial/api/users/login",
+                                "protocol": "http",
+                                "host": ["localhost"],
+                                "port": "8080",
+                                "path": ["minisocial", "api", "users", "login"]
+                            },
+                            "body": {
+                                "mode": "raw",
+                                "raw": "{\n    \"email\": \"test@example.com\",\n    \"password\": \"password123\"\n}"
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "Posts",
+                "item": [
+                    {
+                        "name": "Create Post",
+                        "request": {
+                            "method": "POST",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                },
+                                {
+                                    "key": "Authorization",
+                                    "value": "Bearer {{token}}"
+                                }
+                            ],
+                            "url": {
+                                "raw": "http://localhost:8080/minisocial/api/posts",
+                                "protocol": "http",
+                                "host": ["localhost"],
+                                "port": "8080",
+                                "path": ["minisocial", "api", "posts"]
+                            },
+                            "body": {
+                                "mode": "raw",
+                                "raw": "{\n    \"content\": \"This is a test post\",\n    \"userId\": \"{{userId}}\"\n}"
+                            }
+                        }
+                    },
+                    {
+                        "name": "Get Posts",
+                        "request": {
+                            "method": "GET",
+                            "header": [
+                                {
+                                    "key": "Authorization",
+                                    "value": "Bearer {{token}}"
+                                }
+                            ],
+                            "url": {
+                                "raw": "http://localhost:8080/minisocial/api/posts",
+                                "protocol": "http",
+                                "host": ["localhost"],
+                                "port": "8080",
+                                "path": ["minisocial", "api", "posts"]
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "Comments",
+                "item": [
+                    {
+                        "name": "Create Comment",
+                        "request": {
+                            "method": "POST",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                },
+                                {
+                                    "key": "Authorization",
+                                    "value": "Bearer {{token}}"
+                                }
+                            ],
+                            "url": {
+                                "raw": "http://localhost:8080/minisocial/api/comments/{{postId}}",
+                                "protocol": "http",
+                                "host": ["localhost"],
+                                "port": "8080",
+                                "path": ["minisocial", "api", "comments", "{{postId}}"]
+                            },
+                            "body": {
+                                "mode": "raw",
+                                "raw": "{\n    \"content\": \"This is a test comment\",\n    \"userId\": \"{{userId}}\"\n}"
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "Groups",
+                "item": [
+                    {
+                        "name": "Create Group",
+                        "request": {
+                            "method": "POST",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                },
+                                {
+                                    "key": "Authorization",
+                                    "value": "Bearer {{token}}"
+                                }
+                            ],
+                            "url": {
+                                "raw": "http://localhost:8080/minisocial/api/groups?name=Test Group&description=This is a test group&isOpen=true&creatorId={{userId}}",
+                                "protocol": "http",
+                                "host": ["localhost"],
+                                "port": "8080",
+                                "path": ["minisocial", "api", "groups"],
+                                "query": [
+                                    {
+                                        "key": "name",
+                                        "value": "Test Group"
+                                    },
+                                    {
+                                        "key": "description",
+                                        "value": "This is a test group"
+                                    },
+                                    {
+                                        "key": "isOpen",
+                                        "value": "true"
+                                    },
+                                    {
+                                        "key": "creatorId",
+                                        "value": "{{userId}}"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "Friends",
+                "item": [
+                    {
+                        "name": "Send Friend Request",
+                        "request": {
+                            "method": "POST",
+                            "header": [
+                                {
+                                    "key": "Authorization",
+                                    "value": "Bearer {{token}}"
+                                }
+                            ],
+                            "url": {
+                                "raw": "http://localhost:8080/minisocial/api/friends/request/{{receiverId}}?senderId={{userId}}",
+                                "protocol": "http",
+                                "host": ["localhost"],
+                                "port": "8080",
+                                "path": ["minisocial", "api", "friends", "request", "{{receiverId}}"],
+                                "query": [
+                                    {
+                                        "key": "senderId",
+                                        "value": "{{userId}}"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "Notifications",
+                "item": [
+                    {
+                        "name": "Get All Notifications",
+                        "request": {
+                            "method": "GET",
+                            "header": [
+                                {
+                                    "key": "Authorization",
+                                    "value": "Bearer {{token}}"
+                                }
+                            ],
+                            "url": {
+                                "raw": "http://localhost:8080/minisocial/api/notifications",
+                                "protocol": "http",
+                                "host": ["localhost"],
+                                "port": "8080",
+                                "path": ["minisocial", "api", "notifications"]
+                            }
+                        }
+                    },
+                    {
+                        "name": "Get Unread Notifications",
+                        "request": {
+                            "method": "GET",
+                            "header": [
+                                {
+                                    "key": "Authorization",
+                                    "value": "Bearer {{token}}"
+                                }
+                            ],
+                            "url": {
+                                "raw": "http://localhost:8080/minisocial/api/notifications/unread",
+                                "protocol": "http",
+                                "host": ["localhost"],
+                                "port": "8080",
+                                "path": ["minisocial", "api", "notifications", "unread"]
+                            }
+                        }
+                    },
+                    {
+                        "name": "Mark Notification as Read",
+                        "request": {
+                            "method": "PUT",
+                            "header": [
+                                {
+                                    "key": "Authorization",
+                                    "value": "Bearer {{token}}"
+                                }
+                            ],
+                            "url": {
+                                "raw": "http://localhost:8080/minisocial/api/notifications/{{notificationId}}/read",
+                                "protocol": "http",
+                                "host": ["localhost"],
+                                "port": "8080",
+                                "path": ["minisocial", "api", "notifications", "{{notificationId}}", "read"]
+                            }
+                        }
+                    },
+                    {
+                        "name": "Mark All Notifications as Read",
+                        "request": {
+                            "method": "PUT",
+                            "header": [
+                                {
+                                    "key": "Authorization",
+                                    "value": "Bearer {{token}}"
+                                }
+                            ],
+                            "url": {
+                                "raw": "http://localhost:8080/minisocial/api/notifications/read-all",
+                                "protocol": "http",
+                                "host": ["localhost"],
+                                "port": "8080",
+                                "path": ["minisocial", "api", "notifications", "read-all"]
+                            }
+                        }
+                    }
+                ]
+            }
+        ],
+        "variable": [
+            {
+                "key": "token",
+                "value": "",
+                "type": "string"
+            },
+            {
+                "key": "userId",
+                "value": "",
+                "type": "string"
+            },
+            {
+                "key": "postId",
+                "value": "",
+                "type": "string"
+            },
+            {
+                "key": "groupId",
+                "value": "",
+                "type": "string"
+            },
+            {
+                "key": "receiverId",
+                "value": "",
+                "type": "string"
+            },
+            {
+                "key": "notificationId",
+                "value": "",
+                "type": "string"
+            }
+        ]
+    }
+} 

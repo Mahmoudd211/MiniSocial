@@ -1,0 +1,77 @@
+{
+    "create_post": {
+        "method": "POST",
+        "url": "http://localhost:8080/minisocial/api/posts",
+        "headers": {
+            "Authorization": "Bearer ${token}",
+            "Content-Type": "application/json"
+        },
+        "body": {
+            "content": "This is a test post",
+            "imageUrl": "https://example.com/image.jpg"
+        },
+        "expected_response": {
+            "status": 201,
+            "body": {
+                "id": 1,
+                "content": "This is a test post",
+                "imageUrl": "https://example.com/image.jpg",
+                "authorId": 1,
+                "createdAt": "2024-03-20T10:00:00"
+            }
+        }
+    },
+    "get_posts": {
+        "method": "GET",
+        "url": "http://localhost:8080/minisocial/api/posts",
+        "headers": {
+            "Authorization": "Bearer ${token}"
+        },
+        "expected_response": {
+            "status": 200,
+            "body": [
+                {
+                    "id": 1,
+                    "content": "This is a test post",
+                    "imageUrl": "https://example.com/image.jpg",
+                    "authorId": 1,
+                    "createdAt": "2024-03-20T10:00:00"
+                }
+            ]
+        }
+    },
+    "like_post": {
+        "method": "POST",
+        "url": "http://localhost:8080/minisocial/api/posts/1/like",
+        "headers": {
+            "Authorization": "Bearer ${token}"
+        },
+        "expected_response": {
+            "status": 200,
+            "body": {
+                "message": "Post liked successfully"
+            }
+        }
+    },
+    "add_comment": {
+        "method": "POST",
+        "url": "http://localhost:8080/minisocial/api/posts/1/comments",
+        "headers": {
+            "Authorization": "Bearer ${token}",
+            "Content-Type": "application/json"
+        },
+        "body": {
+            "content": "This is a test comment"
+        },
+        "expected_response": {
+            "status": 201,
+            "body": {
+                "id": 1,
+                "content": "This is a test comment",
+                "postId": 1,
+                "authorId": 1,
+                "createdAt": "2024-03-20T10:00:00"
+            }
+        }
+    }
+} 

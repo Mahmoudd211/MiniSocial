@@ -1,0 +1,350 @@
+{
+    "auth": {
+        "register": {
+            "method": "POST",
+            "url": "http://localhost:8080/minisocial/api/users/register",
+            "headers": {
+                "Content-Type": "application/json"
+            },
+            "body": {
+                "name": "Test User",
+                "email": "test@example.com",
+                "password": "password123",
+                "role": "USER"
+            },
+            "expected_response": {
+                "status": 201,
+                "body": {
+                    "id": 1,
+                    "name": "Test User",
+                    "email": "test@example.com",
+                    "role": "USER"
+                }
+            }
+        },
+        "login": {
+            "method": "POST",
+            "url": "http://localhost:8080/minisocial/api/users/login",
+            "headers": {
+                "Content-Type": "application/json"
+            },
+            "body": {
+                "email": "test@example.com",
+                "password": "password123"
+            },
+            "expected_response": {
+                "status": 200,
+                "body": {
+                    "token": "eyJhbGciOiJIUzI1NiJ9...",
+                    "user": {
+                        "id": 1,
+                        "name": "Test User",
+                        "email": "test@example.com",
+                        "role": "USER"
+                    }
+                }
+            }
+        }
+    },
+    "posts": {
+        "create_post": {
+            "method": "POST",
+            "url": "http://localhost:8080/minisocial/api/posts",
+            "headers": {
+                "Authorization": "Bearer ${token}",
+                "Content-Type": "application/json"
+            },
+            "body": {
+                "content": "This is a test post",
+                "imageUrl": "https://example.com/image.jpg"
+            },
+            "expected_response": {
+                "status": 201,
+                "body": {
+                    "id": 1,
+                    "content": "This is a test post",
+                    "imageUrl": "https://example.com/image.jpg",
+                    "authorId": 1,
+                    "createdAt": "2024-03-20T10:00:00"
+                }
+            }
+        },
+        "get_posts": {
+            "method": "GET",
+            "url": "http://localhost:8080/minisocial/api/posts",
+            "headers": {
+                "Authorization": "Bearer ${token}"
+            },
+            "expected_response": {
+                "status": 200,
+                "body": [
+                    {
+                        "id": 1,
+                        "content": "This is a test post",
+                        "imageUrl": "https://example.com/image.jpg",
+                        "authorId": 1,
+                        "createdAt": "2024-03-20T10:00:00"
+                    }
+                ]
+            }
+        },
+        "like_post": {
+            "method": "POST",
+            "url": "http://localhost:8080/minisocial/api/posts/1/like",
+            "headers": {
+                "Authorization": "Bearer ${token}"
+            },
+            "expected_response": {
+                "status": 200,
+                "body": {
+                    "message": "Post liked successfully"
+                }
+            }
+        },
+        "add_comment": {
+            "method": "POST",
+            "url": "http://localhost:8080/minisocial/api/posts/1/comments",
+            "headers": {
+                "Authorization": "Bearer ${token}",
+                "Content-Type": "application/json"
+            },
+            "body": {
+                "content": "This is a test comment"
+            },
+            "expected_response": {
+                "status": 201,
+                "body": {
+                    "id": 1,
+                    "content": "This is a test comment",
+                    "postId": 1,
+                    "authorId": 1,
+                    "createdAt": "2024-03-20T10:00:00"
+                }
+            }
+        }
+    },
+    "groups": {
+        "create_group": {
+            "method": "POST",
+            "url": "http://localhost:8080/minisocial/api/groups",
+            "headers": {
+                "Authorization": "Bearer ${token}",
+                "Content-Type": "application/json"
+            },
+            "body": {
+                "name": "Test Group",
+                "description": "This is a test group"
+            },
+            "expected_response": {
+                "status": 201,
+                "body": {
+                    "id": 1,
+                    "name": "Test Group",
+                    "description": "This is a test group",
+                    "createdBy": 1,
+                    "createdAt": "2024-03-20T10:00:00"
+                }
+            }
+        },
+        "join_group": {
+            "method": "POST",
+            "url": "http://localhost:8080/minisocial/api/groups/1/join",
+            "headers": {
+                "Authorization": "Bearer ${token}"
+            },
+            "expected_response": {
+                "status": 200,
+                "body": {
+                    "message": "Successfully joined the group"
+                }
+            }
+        },
+        "create_group_post": {
+            "method": "POST",
+            "url": "http://localhost:8080/minisocial/api/groups/1/posts",
+            "headers": {
+                "Authorization": "Bearer ${token}",
+                "Content-Type": "application/json"
+            },
+            "body": {
+                "content": "This is a test group post",
+                "imageUrl": "https://example.com/image.jpg"
+            },
+            "expected_response": {
+                "status": 201,
+                "body": {
+                    "id": 1,
+                    "content": "This is a test group post",
+                    "imageUrl": "https://example.com/image.jpg",
+                    "groupId": 1,
+                    "authorId": 1,
+                    "createdAt": "2024-03-20T10:00:00"
+                }
+            }
+        },
+        "get_group_posts": {
+            "method": "GET",
+            "url": "http://localhost:8080/minisocial/api/groups/1/posts",
+            "headers": {
+                "Authorization": "Bearer ${token}"
+            },
+            "expected_response": {
+                "status": 200,
+                "body": [
+                    {
+                        "id": 1,
+                        "content": "This is a test group post",
+                        "imageUrl": "https://example.com/image.jpg",
+                        "groupId": 1,
+                        "authorId": 1,
+                        "createdAt": "2024-03-20T10:00:00"
+                    }
+                ]
+            }
+        }
+    },
+    "friends": {
+        "send_friend_request": {
+            "method": "POST",
+            "url": "http://localhost:8080/minisocial/api/friends/request",
+            "headers": {
+                "Authorization": "Bearer ${token}",
+                "Content-Type": "application/json"
+            },
+            "body": {
+                "receiverId": 2
+            },
+            "expected_response": {
+                "status": 200,
+                "body": {
+                    "message": "Friend request sent successfully"
+                }
+            }
+        },
+        "accept_friend_request": {
+            "method": "POST",
+            "url": "http://localhost:8080/minisocial/api/friends/accept",
+            "headers": {
+                "Authorization": "Bearer ${token}",
+                "Content-Type": "application/json"
+            },
+            "body": {
+                "senderId": 1
+            },
+            "expected_response": {
+                "status": 200,
+                "body": {
+                    "message": "Friend request accepted"
+                }
+            }
+        },
+        "get_friends": {
+            "method": "GET",
+            "url": "http://localhost:8080/minisocial/api/friends",
+            "headers": {
+                "Authorization": "Bearer ${token}"
+            },
+            "expected_response": {
+                "status": 200,
+                "body": [
+                    {
+                        "id": 2,
+                        "username": "friend1",
+                        "email": "friend1@example.com",
+                        "profilePicture": "https://example.com/profile1.jpg"
+                    }
+                ]
+            }
+        },
+        "get_friend_requests": {
+            "method": "GET",
+            "url": "http://localhost:8080/minisocial/api/friends/requests",
+            "headers": {
+                "Authorization": "Bearer ${token}"
+            },
+            "expected_response": {
+                "status": 200,
+                "body": [
+                    {
+                        "id": 1,
+                        "senderId": 3,
+                        "receiverId": 1,
+                        "status": "PENDING",
+                        "createdAt": "2024-03-20T10:00:00"
+                    }
+                ]
+            }
+        }
+    },
+    "notifications": {
+        "get_notifications": {
+            "method": "GET",
+            "url": "http://localhost:8080/minisocial/api/notifications",
+            "headers": {
+                "Authorization": "Bearer ${token}"
+            },
+            "expected_response": {
+                "status": 200,
+                "body": [
+                    {
+                        "id": 1,
+                        "type": "POST_LIKED",
+                        "message": "User liked your post",
+                        "userId": 1,
+                        "createdAt": "2024-03-20T10:00:00",
+                        "read": false
+                    },
+                    {
+                        "id": 2,
+                        "type": "POST_COMMENTED",
+                        "message": "User commented on your post",
+                        "userId": 1,
+                        "createdAt": "2024-03-20T10:00:00",
+                        "read": false
+                    },
+                    {
+                        "id": 3,
+                        "type": "GROUP_JOINED",
+                        "message": "User joined your group",
+                        "userId": 1,
+                        "createdAt": "2024-03-20T10:00:00",
+                        "read": false
+                    }
+                ]
+            }
+        },
+        "get_unread_notifications": {
+            "method": "GET",
+            "url": "http://localhost:8080/minisocial/api/notifications/unread",
+            "headers": {
+                "Authorization": "Bearer ${token}"
+            },
+            "expected_response": {
+                "status": 200,
+                "body": [
+                    {
+                        "id": 1,
+                        "type": "POST_LIKED",
+                        "message": "User liked your post",
+                        "userId": 1,
+                        "createdAt": "2024-03-20T10:00:00",
+                        "read": false
+                    }
+                ]
+            }
+        },
+        "mark_notification_read": {
+            "method": "PUT",
+            "url": "http://localhost:8080/minisocial/api/notifications/1/read",
+            "headers": {
+                "Authorization": "Bearer ${token}"
+            },
+            "expected_response": {
+                "status": 200,
+                "body": {
+                    "message": "Notification marked as read"
+                }
+            }
+        }
+    }
+} 

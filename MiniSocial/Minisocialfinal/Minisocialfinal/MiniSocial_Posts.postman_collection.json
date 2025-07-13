@@ -1,0 +1,131 @@
+{
+    "info": {
+        "name": "MiniSocial Posts",
+        "description": "Collection for testing post management features in MiniSocial",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Create Post",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:8080/Minisocialfinal/api/posts?userId=1",
+                    "protocol": "http",
+                    "host": ["localhost"],
+                    "port": "8080",
+                    "path": ["Minisocialfinal", "api", "posts"],
+                    "query": [
+                        {
+                            "key": "userId",
+                            "value": "1"
+                        }
+                    ]
+                },
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"content\": \"Hello, this is my first post!\",\n    \"imageUrls\": [\"https://example.com/image1.jpg\"],\n    \"linkUrls\": [\"https://example.com/link1\"]\n}"
+                },
+                "description": "Create a new post with text content, images, and links"
+            }
+        },
+        {
+            "name": "Get User Posts",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "http://localhost:8080/Minisocialfinal/api/posts/user/1",
+                    "protocol": "http",
+                    "host": ["localhost"],
+                    "port": "8080",
+                    "path": ["Minisocialfinal", "api", "posts", "user", "1"]
+                },
+                "description": "Get all posts created by a specific user"
+            }
+        },
+        {
+            "name": "Get Friends Posts",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "http://localhost:8080/Minisocialfinal/api/posts/friends/1",
+                    "protocol": "http",
+                    "host": ["localhost"],
+                    "port": "8080",
+                    "path": ["Minisocialfinal", "api", "posts", "friends", "1"]
+                },
+                "description": "Get all posts from a user's friends"
+            }
+        },
+        {
+            "name": "Update Post",
+            "request": {
+                "method": "PUT",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:8080/Minisocialfinal/api/posts/1?userId=1",
+                    "protocol": "http",
+                    "host": ["localhost"],
+                    "port": "8080",
+                    "path": ["Minisocialfinal", "api", "posts", "1"],
+                    "query": [
+                        {
+                            "key": "userId",
+                            "value": "1"
+                        }
+                    ]
+                },
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"content\": \"Updated post content\",\n    \"imageUrls\": [\"https://example.com/image2.jpg\"],\n    \"linkUrls\": [\"https://example.com/link2\"]\n}"
+                },
+                "description": "Update an existing post"
+            }
+        },
+        {
+            "name": "Delete Post",
+            "request": {
+                "method": "DELETE",
+                "url": {
+                    "raw": "http://localhost:8080/Minisocialfinal/api/posts/1?userId=1",
+                    "protocol": "http",
+                    "host": ["localhost"],
+                    "port": "8080",
+                    "path": ["Minisocialfinal", "api", "posts", "1"],
+                    "query": [
+                        {
+                            "key": "userId",
+                            "value": "1"
+                        }
+                    ]
+                },
+                "description": "Delete a post"
+            }
+        },
+        {
+            "name": "Get Post by ID",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "http://localhost:8080/Minisocialfinal/api/posts/1",
+                    "protocol": "http",
+                    "host": ["localhost"],
+                    "port": "8080",
+                    "path": ["Minisocialfinal", "api", "posts", "1"]
+                },
+                "description": "Get a specific post by its ID"
+            }
+        }
+    ]
+} 

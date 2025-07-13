@@ -1,0 +1,20 @@
+# Enable the messaging subsystem
+/subsystem=messaging-activemq:add
+
+# Configure the server
+/subsystem=messaging-activemq/server=default:add
+
+# Configure the in-vm connector
+/subsystem=messaging-activemq/server=default/connector=in-vm:add(socket-binding=messaging-invm)
+
+# Configure the connection factory
+/subsystem=messaging-activemq/server=default/connection-factory=InVmConnectionFactory:add(connectors=[in-vm])
+
+# Create the notification queue
+/subsystem=messaging-activemq/server=default/jms-queue=NotificationQueue:add(entries=["java:/jms/queue/NotificationQueue"])
+
+# Add the connection factory to JNDI
+/subsystem=messaging-activemq/server=default/connection-factory=ConnectionFactory:add(connectors=[in-vm], entries=["java:/ConnectionFactory"])
+
+# Configure the socket binding
+/socket-binding-group=standard-sockets/socket-binding=messaging-invm:add(port=0) 

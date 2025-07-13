@@ -1,0 +1,724 @@
+{
+  "info": {
+    "name": "MiniSocial API Tests",
+    "description": "Comprehensive tests for MiniSocial application with event-driven architecture",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "1.0.0"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "description": "User registration and authentication endpoints",
+      "item": [
+        {
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/users/register",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "users", "register"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@example.com\",\n  \"password\": \"StrongPassword123!\",\n  \"name\": \"Test User\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Register a new user with the application"
+          },
+          "response": []
+        },
+        {
+          "name": "Login User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "pm.environment.set(\"token\", jsonData.token);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/users/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "users", "login"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@example.com\",\n  \"password\": \"StrongPassword123!\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Login and get an authentication token"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "User Management",
+      "description": "User profile and management operations",
+      "item": [
+        {
+          "name": "Get Current User Profile",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/users/profile",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "users", "profile"]
+            },
+            "description": "Get the current user's profile"
+          },
+          "response": []
+        },
+        {
+          "name": "Get User By ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/users/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "users", "1"]
+            },
+            "description": "Get a user profile by ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Update User Profile",
+          "request": {
+            "method": "PUT",
+            "url": {
+              "raw": "{{baseUrl}}/api/users/profile",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "users", "profile"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Updated Name\",\n  \"bio\": \"This is my updated bio\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Update the current user's profile"
+          },
+          "response": []
+        },
+        {
+          "name": "Search Users",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/users/search?query=test",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "users", "search"],
+              "query": [
+                {
+                  "key": "query",
+                  "value": "test"
+                }
+              ]
+            },
+            "description": "Search for users by name or email"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Friend Management",
+      "description": "Friend requests and friend management",
+      "item": [
+        {
+          "name": "Send Friend Request",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/friends/request?receiverId=2",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "friends", "request"],
+              "query": [
+                {
+                  "key": "receiverId",
+                  "value": "2"
+                }
+              ]
+            },
+            "description": "Send a friend request to another user"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Pending Friend Requests",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/friends/requests/pending",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "friends", "requests", "pending"]
+            },
+            "description": "Get pending friend requests for the current user"
+          },
+          "response": []
+        },
+        {
+          "name": "Accept Friend Request",
+          "request": {
+            "method": "PUT",
+            "url": {
+              "raw": "{{baseUrl}}/api/friends/request/1/accept",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "friends", "request", "1", "accept"]
+            },
+            "description": "Accept a friend request"
+          },
+          "response": []
+        },
+        {
+          "name": "Reject Friend Request",
+          "request": {
+            "method": "PUT",
+            "url": {
+              "raw": "{{baseUrl}}/api/friends/request/1/reject",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "friends", "request", "1", "reject"]
+            },
+            "description": "Reject a friend request"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Friends List",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/friends",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "friends"]
+            },
+            "description": "Get the current user's friends list"
+          },
+          "response": []
+        },
+        {
+          "name": "Remove Friend",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/api/friends/2",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "friends", "2"]
+            },
+            "description": "Remove a user from friends list"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Posts",
+      "description": "Post creation and management",
+      "item": [
+        {
+          "name": "Create Post",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/posts",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "posts"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": \"This is a test post content\",\n  \"visibility\": \"PUBLIC\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Create a new post"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Public Feed",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/posts",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "posts"]
+            },
+            "description": "Get public posts feed"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Friends Feed",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/posts/friends",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "posts", "friends"]
+            },
+            "description": "Get posts from friends"
+          },
+          "response": []
+        },
+        {
+          "name": "Get User Posts",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/posts/user/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "posts", "user", "1"]
+            },
+            "description": "Get posts by user ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Post By ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/posts/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "posts", "1"]
+            },
+            "description": "Get a specific post by ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Post",
+          "request": {
+            "method": "PUT",
+            "url": {
+              "raw": "{{baseUrl}}/api/posts/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "posts", "1"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": \"Updated post content\",\n  \"visibility\": \"FRIENDS\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Update an existing post"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Post",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/api/posts/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "posts", "1"]
+            },
+            "description": "Delete a post"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Post Interactions",
+      "description": "Interactions with posts (likes and comments)",
+      "item": [
+        {
+          "name": "Like Post",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/posts/1/like",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "posts", "1", "like"]
+            },
+            "description": "Like a post"
+          },
+          "response": []
+        },
+        {
+          "name": "Unlike Post",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/api/posts/1/like",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "posts", "1", "like"]
+            },
+            "description": "Remove like from a post"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Post Likes",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/posts/1/likes",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "posts", "1", "likes"]
+            },
+            "description": "Get users who liked a post"
+          },
+          "response": []
+        },
+        {
+          "name": "Add Comment",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/posts/1/comments",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "posts", "1", "comments"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": \"This is a test comment\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Add a comment to a post"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Post Comments",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/posts/1/comments",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "posts", "1", "comments"]
+            },
+            "description": "Get all comments for a post"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Comment",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/api/posts/comments/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "posts", "comments", "1"]
+            },
+            "description": "Delete a comment"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Groups",
+      "description": "Group management and interactions",
+      "item": [
+        {
+          "name": "Create Group",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/groups?name=Test Group&description=A test group",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "groups"],
+              "query": [
+                {
+                  "key": "name",
+                  "value": "Test Group"
+                },
+                {
+                  "key": "description",
+                  "value": "A test group"
+                }
+              ]
+            },
+            "description": "Create a new group"
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Groups",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/groups",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "groups"]
+            },
+            "description": "Get all groups"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Group By ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/groups/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "groups", "1"]
+            },
+            "description": "Get a specific group by ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Get My Groups",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/groups/my",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "groups", "my"]
+            },
+            "description": "Get groups the current user is a member of"
+          },
+          "response": []
+        },
+        {
+          "name": "Request to Join Group",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/groups/1/join",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "groups", "1", "join"]
+            },
+            "description": "Request to join a group"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Join Requests",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/groups/1/requests",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "groups", "1", "requests"]
+            },
+            "description": "Get all join requests for a group"
+          },
+          "response": []
+        },
+        {
+          "name": "Approve Join Request",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/groups/1/requests/2/approve",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "groups", "1", "requests", "2", "approve"]
+            },
+            "description": "Approve a request to join a group"
+          },
+          "response": []
+        },
+        {
+          "name": "Reject Join Request",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/groups/1/requests/2/reject",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "groups", "1", "requests", "2", "reject"]
+            },
+            "description": "Reject a request to join a group"
+          },
+          "response": []
+        },
+        {
+          "name": "Leave Group",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/groups/1/leave",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "groups", "1", "leave"]
+            },
+            "description": "Leave a group"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Group Posts",
+      "description": "Posts within groups",
+      "item": [
+        {
+          "name": "Create Group Post",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/groups/1/posts",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "groups", "1", "posts"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": \"This is a test group post\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Create a post in a group"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Group Posts",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/groups/1/posts",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "groups", "1", "posts"]
+            },
+            "description": "Get all posts in a group"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Notifications",
+      "description": "Notification management",
+      "item": [
+        {
+          "name": "Get Notifications",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/notifications",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "notifications"]
+            },
+            "description": "Get all notifications for the current user"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Unread Notifications",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/notifications/unread",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "notifications", "unread"]
+            },
+            "description": "Get unread notifications for the current user"
+          },
+          "response": []
+        },
+        {
+          "name": "Mark Notification as Read",
+          "request": {
+            "method": "PUT",
+            "url": {
+              "raw": "{{baseUrl}}/api/notifications/1/read",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "notifications", "1", "read"]
+            },
+            "description": "Mark a notification as read"
+          },
+          "response": []
+        },
+        {
+          "name": "Mark All Notifications as Read",
+          "request": {
+            "method": "PUT",
+            "url": {
+              "raw": "{{baseUrl}}/api/notifications/read-all",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "notifications", "read-all"]
+            },
+            "description": "Mark all notifications as read"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Event System Tests",
+      "description": "Tests for the event-driven notification system",
+      "item": [
+        {
+          "name": "Test Single Event",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/test/event",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "test", "event"]
+            },
+            "description": "Send a single test event through the event system"
+          },
+          "response": []
+        },
+        {
+          "name": "Test Multiple Events",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/test/event/full",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "test", "event", "full"]
+            },
+            "description": "Send multiple test events through the event system"
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080/minisocial",
+      "type": "string"
+    }
+  ]
+} 

@@ -1,0 +1,73 @@
+{
+    "send_friend_request": {
+        "method": "POST",
+        "url": "http://localhost:8080/minisocial/api/friends/request",
+        "headers": {
+            "Authorization": "Bearer ${token}",
+            "Content-Type": "application/json"
+        },
+        "body": {
+            "receiverId": 2
+        },
+        "expected_response": {
+            "status": 200,
+            "body": {
+                "message": "Friend request sent successfully"
+            }
+        }
+    },
+    "accept_friend_request": {
+        "method": "POST",
+        "url": "http://localhost:8080/minisocial/api/friends/accept",
+        "headers": {
+            "Authorization": "Bearer ${token}",
+            "Content-Type": "application/json"
+        },
+        "body": {
+            "senderId": 1
+        },
+        "expected_response": {
+            "status": 200,
+            "body": {
+                "message": "Friend request accepted"
+            }
+        }
+    },
+    "get_friends": {
+        "method": "GET",
+        "url": "http://localhost:8080/minisocial/api/friends",
+        "headers": {
+            "Authorization": "Bearer ${token}"
+        },
+        "expected_response": {
+            "status": 200,
+            "body": [
+                {
+                    "id": 2,
+                    "username": "friend1",
+                    "email": "friend1@example.com",
+                    "profilePicture": "https://example.com/profile1.jpg"
+                }
+            ]
+        }
+    },
+    "get_friend_requests": {
+        "method": "GET",
+        "url": "http://localhost:8080/minisocial/api/friends/requests",
+        "headers": {
+            "Authorization": "Bearer ${token}"
+        },
+        "expected_response": {
+            "status": 200,
+            "body": [
+                {
+                    "id": 1,
+                    "senderId": 3,
+                    "receiverId": 1,
+                    "status": "PENDING",
+                    "createdAt": "2024-03-20T10:00:00"
+                }
+            ]
+        }
+    }
+} 

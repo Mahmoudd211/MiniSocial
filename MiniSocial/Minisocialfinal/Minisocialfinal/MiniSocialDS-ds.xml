@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<datasources xmlns="http://www.jboss.org/ironjacamar/schema">
+    <datasource jndi-name="java:/MiniSocialDS" pool-name="MiniSocialPool" enabled="true" use-java-context="true">
+        <connection-url>jdbc:postgresql://localhost:5432/minisocial</connection-url>
+        <driver>postgresql</driver>
+        <security>
+            <user-name>postgres</user-name>
+            <password>postgres</password>
+        </security>
+        <pool>
+            <min-pool-size>10</min-pool-size>
+            <max-pool-size>100</max-pool-size>
+            <prefill>true</prefill>
+        </pool>
+    </datasource>
+</datasources> 

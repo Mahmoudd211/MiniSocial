@@ -1,0 +1,1008 @@
+{
+	"info": {
+		"_postman_id": "e5f6ec52-9b6a-4b2d-9a32-6af5c2a8e9d7",
+		"name": "MiniSocial Corrected Test Flow",
+		"description": "Complete testing flow for MiniSocial application with corrected endpoints",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12345678"
+	},
+	"item": [
+		{
+			"name": "1. User Management",
+			"item": [
+				{
+					"name": "Register User 1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.environment.set(\"user1_id\", jsonData.id);",
+									"pm.environment.set(\"user1_email\", jsonData.email);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"John Doe\",\n    \"email\": \"john@example.com\",\n    \"password\": \"password123\",\n    \"bio\": \"User 1 for testing\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/users/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"register"
+							]
+						},
+						"description": "Register the first user"
+					},
+					"response": []
+				},
+				{
+					"name": "Register User 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.environment.set(\"user2_id\", jsonData.id);",
+									"pm.environment.set(\"user2_email\", jsonData.email);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Jane Smith\",\n    \"email\": \"jane@example.com\",\n    \"password\": \"password123\",\n    \"bio\": \"User 2 for testing\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/users/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"register"
+							]
+						},
+						"description": "Register the second user"
+					},
+					"response": []
+				},
+				{
+					"name": "Register User 3",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.environment.set(\"user3_id\", jsonData.id);",
+									"pm.environment.set(\"user3_email\", jsonData.email);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Bob Johnson\",\n    \"email\": \"bob@example.com\",\n    \"password\": \"password123\",\n    \"bio\": \"User 3 for testing\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/users/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"register"
+							]
+						},
+						"description": "Register the third user"
+					},
+					"response": []
+				},
+				{
+					"name": "Login User 1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.environment.set(\"user1_token\", jsonData.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/users/login?email={{user1_email}}&password=password123",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"login"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "{{user1_email}}"
+								},
+								{
+									"key": "password",
+									"value": "password123"
+								}
+							]
+						},
+						"description": "Login with User 1"
+					},
+					"response": []
+				},
+				{
+					"name": "Login User 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.environment.set(\"user2_token\", jsonData.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/users/login?email={{user2_email}}&password=password123",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"login"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "{{user2_email}}"
+								},
+								{
+									"key": "password",
+									"value": "password123"
+								}
+							]
+						},
+						"description": "Login with User 2"
+					},
+					"response": []
+				}
+			],
+			"description": "User registration and login operations"
+		},
+		{
+			"name": "2. Friend Management",
+			"item": [
+				{
+					"name": "Send Friend Request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.environment.set(\"friend_request_id\", jsonData.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/friends/request/{{user2_id}}?senderId={{user1_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"friends",
+								"request",
+								"{{user2_id}}"
+							],
+							"query": [
+								{
+									"key": "senderId",
+									"value": "{{user1_id}}"
+								}
+							]
+						},
+						"description": "User 1 sends a friend request to User 2"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Pending Friend Requests (User 2)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/friends/pending?userId={{user2_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"friends",
+								"pending"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "{{user2_id}}"
+								}
+							]
+						},
+						"description": "Get User 2's pending friend requests"
+					},
+					"response": []
+				},
+				{
+					"name": "Get User 2's Notifications (Friend Request)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/notifications/user/{{user2_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"notifications",
+								"user",
+								"{{user2_id}}"
+							]
+						},
+						"description": "Check that User 2 got a notification about the friend request"
+					},
+					"response": []
+				},
+				{
+					"name": "Accept Friend Request",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/friends/request/{{friend_request_id}}/respond?userId={{user2_id}}&accept=true",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"friends",
+								"request",
+								"{{friend_request_id}}",
+								"respond"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "{{user2_id}}"
+								},
+								{
+									"key": "accept",
+									"value": "true"
+								}
+							]
+						},
+						"description": "User 2 accepts User 1's friend request"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Friends List (User 1)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/friends/list?userId={{user1_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"friends",
+								"list"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "{{user1_id}}"
+								}
+							]
+						},
+						"description": "Get User 1's friends list"
+					},
+					"response": []
+				}
+			],
+			"description": "Friend request and management operations"
+		},
+		{
+			"name": "3. Post Management",
+			"item": [
+				{
+					"name": "Create Post (User 1)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.environment.set(\"post_id\", jsonData.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"content\": \"This is a test post from User 1\",\n    \"imageUrls\": [],\n    \"linkUrls\": []\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/posts?userId={{user1_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"posts"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "{{user1_id}}"
+								}
+							]
+						},
+						"description": "User 1 creates a post"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Posts (User 1)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/posts/user/{{user1_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"posts",
+								"user",
+								"{{user1_id}}"
+							]
+						},
+						"description": "Get posts created by User 1"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Post (User 2)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.environment.set(\"post2_id\", jsonData.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"content\": \"This is a test post from User 2\",\n    \"imageUrls\": [],\n    \"linkUrls\": []\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/posts?userId={{user2_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"posts"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "{{user2_id}}"
+								}
+							]
+						},
+						"description": "User 2 creates a post"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Friend Posts (User 2)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/posts/friends/{{user2_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"posts",
+								"friends",
+								"{{user2_id}}"
+							]
+						},
+						"description": "Get posts from User 2's friends (should include User 1's post)"
+					},
+					"response": []
+				}
+			],
+			"description": "Creating and retrieving posts"
+		},
+		{
+			"name": "4. Post Interactions",
+			"item": [
+				{
+					"name": "Like Post (User 2 likes User 1's post)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/likes/{{post_id}}?userId={{user2_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"likes",
+								"{{post_id}}"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "{{user2_id}}"
+								}
+							]
+						},
+						"description": "User 2 likes User 1's post - Should generate a notification for User 1"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Post Likes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/likes/{{post_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"likes",
+								"{{post_id}}"
+							]
+						},
+						"description": "Get likes for User 1's post"
+					},
+					"response": []
+				},
+				{
+					"name": "Get User 1's Notifications (Post Like)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/notifications/user/{{user1_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"notifications",
+								"user",
+								"{{user1_id}}"
+							]
+						},
+						"description": "Check that User 1 got a notification about the like"
+					},
+					"response": []
+				},
+				{
+					"name": "Comment on Post (User 2 comments on User 1's post)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.environment.set(\"comment_id\", jsonData.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"content\": \"This is a test comment from User 2\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/comments/{{post_id}}?userId={{user2_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"comments",
+								"{{post_id}}"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "{{user2_id}}"
+								}
+							]
+						},
+						"description": "User 2 comments on User 1's post - Should generate a notification for User 1"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Post Comments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/comments/{{post_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"comments",
+								"{{post_id}}"
+							]
+						},
+						"description": "Get comments for User 1's post"
+					},
+					"response": []
+				},
+				{
+					"name": "Get User 1's Notifications (Post Comment)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/notifications/user/{{user1_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"notifications",
+								"user",
+								"{{user1_id}}"
+							]
+						},
+						"description": "Check that User 1 got a notification about the comment"
+					},
+					"response": []
+				}
+			],
+			"description": "Like and comment operations and corresponding notifications"
+		},
+		{
+			"name": "5. Group Management",
+			"item": [
+				{
+					"name": "Create Group (User 1)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.environment.set(\"group_id\", jsonData.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/groups?name=Test Group&description=A group for testing notifications&isOpen=false&creatorId={{user1_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"groups"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Test Group"
+								},
+								{
+									"key": "description",
+									"value": "A group for testing notifications"
+								},
+								{
+									"key": "isOpen",
+									"value": "false"
+								},
+								{
+									"key": "creatorId",
+									"value": "{{user1_id}}"
+								}
+							]
+						},
+						"description": "User 1 creates a group"
+					},
+					"response": []
+				},
+				{
+					"name": "Get User 1's Notifications (Group Creation)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/notifications/user/{{user1_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"notifications",
+								"user",
+								"{{user1_id}}"
+							]
+						},
+						"description": "Check that User 1 got a notification about joining (creating) the group"
+					},
+					"response": []
+				},
+				{
+					"name": "Request to Join Group (User 2)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.environment.set(\"group_request_id\", jsonData.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/groups/{{group_id}}/join?userId={{user2_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"groups",
+								"{{group_id}}",
+								"join"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "{{user2_id}}"
+								}
+							]
+						},
+						"description": "User 2 requests to join User 1's group"
+					},
+					"response": []
+				},
+				{
+					"name": "Approve Join Request (User 1)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/groups/requests/{{group_request_id}}/approve?adminId={{user1_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"groups",
+								"requests",
+								"{{group_request_id}}",
+								"approve"
+							],
+							"query": [
+								{
+									"key": "adminId",
+									"value": "{{user1_id}}"
+								}
+							]
+						},
+						"description": "User 1 approves User 2's request to join the group"
+					},
+					"response": []
+				},
+				{
+					"name": "Get User 2's Notifications (Group Join)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/notifications/user/{{user2_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"notifications",
+								"user",
+								"{{user2_id}}"
+							]
+						},
+						"description": "Check that User 2 got a notification about joining the group"
+					},
+					"response": []
+				},
+				{
+					"name": "Add Leave Group Endpoint (User 2)",
+					"description": "This endpoint needs to be added to the GroupResource.java file:\n\n```java\n@DELETE\n@Path(\"/{groupId}/leave\")\npublic Response leaveGroup(\n        @PathParam(\"groupId\") Long groupId,\n        @QueryParam(\"userId\") Long userId) {\n    try {\n        groupService.leaveGroup(groupId, userId);\n        return Response.noContent().build();\n    } catch (IllegalArgumentException | IllegalStateException e) {\n        return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();\n    }\n}\n```",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/groups/{{group_id}}/leave?userId={{user2_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"groups",
+								"{{group_id}}",
+								"leave"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "{{user2_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User 2's Notifications (Group Leave)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/notifications/user/{{user2_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"notifications",
+								"user",
+								"{{user2_id}}"
+							]
+						},
+						"description": "Check that User 2 got a notification about leaving the group"
+					},
+					"response": []
+				}
+			],
+			"description": "Group operations and corresponding notifications"
+		},
+		{
+			"name": "6. All Notifications",
+			"item": [
+				{
+					"name": "Get All User 1's Notifications",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/notifications/user/{{user1_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"notifications",
+								"user",
+								"{{user1_id}}"
+							]
+						},
+						"description": "Get all notifications for User 1"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All User 2's Notifications",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/notifications/user/{{user2_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"notifications",
+								"user",
+								"{{user2_id}}"
+							]
+						},
+						"description": "Get all notifications for User 2"
+					},
+					"response": []
+				},
+				{
+					"name": "Mark Notification as Read (User 1)",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/notifications/{{notification_id}}/read",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"notifications",
+								"{{notification_id}}",
+								"read"
+							]
+						},
+						"description": "Mark a notification as read (replace {{notification_id}} with an actual ID)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Unread Notifications (User 1)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/notifications/user/{{user1_id}}/unread",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"notifications",
+								"user",
+								"{{user1_id}}",
+								"unread"
+							]
+						},
+						"description": "Get only unread notifications for User 1"
+					},
+					"response": []
+				}
+			],
+			"description": "Getting and managing all notifications"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	]
+} 
